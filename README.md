@@ -84,6 +84,22 @@ Note that the default path where the data is stored inside the container is at
 /data/db. You can mount a volume at this location to create external
 backups.
 
+## Database backups
+
+This image introduces a mechanism for creating and storing backups on Amazon S3.
+The backups can be run manually or using an internal cron schedule.
+
+To run the backups manually, do:
+
+    docker run -e AWS_ACCESS_KEY_ID=keyid -e AWS_SECRET_ACCESS_KEY=secret -e AWS_DEFAULT_REGION=region -e S3_BUCKET=path/to/bucket /backup.sh
+
+To run the backups on a cron schedule (e.g every day at 6 am), do:
+
+    docker run -d -e AWS_ACCESS_KEY_ID=keyid -e AWS_SECRET_ACCESS_KEY=secret -e AWS_DEFAULT_REGION=region -e S3_BUCKET=path/to/bucket -e CRON_TIME="0 6 * * * root"
+
+If you want to backup a specific database, you can pass the database name using
+the environment variable MONGO_DB.
+
 
 ## License
 
