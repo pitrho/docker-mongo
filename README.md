@@ -100,6 +100,10 @@ To run the backups on a cron schedule (e.g every day at 6 am), do:
 If you want to backup a specific database, you can pass the database name using
 the environment variable MONGO_DB.
 
+Also, if you're running in a cluster environment, you may set the environment
+variable BACKUP_ONLY_MASTER to true so that the backup script only executes on
+the master instance.
+
 
 ## License
 

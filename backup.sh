@@ -7,9 +7,21 @@ REDIS_DATA_DIR=${REDIS_DATA_DIR:=/var/lib/redis}
 [ -z "${AWS_SECRET_ACCESS_KEY}" ] && { echo "=> AWS_SECRET_ACCESS_KEY cannot be empty" && exit 1; }
 [ -z "${AWS_DEFAULT_REGION}" ] && { echo "=> AWS_DEFAULT_REGION cannot be empty" && exit 1; }
 
+BACK_ONLY_MASTER=${BACKUP_ONLY_MASTER:="false"}
 MAX_BACKUPS=${MAX_BACKUPS:=30}
 BACKUP_NAME=$( [ ${MONGO_DB} ] && echo "${MONGO_DB}_`date +"%m%d%Y_%H%M%S"`.tar.gz" || echo "mongodb_`date +"%m%d%Y_%H%M%S"`.tar.gz" )
 BACKUP_DIR=/tmp/backup/
+
+# Check if we're told to back up onl the master. If so, and we're not the master
+# then exit
+if [ "$BACK_ONLY_MASTER" = "true" ]; then
+  IS_MASTER=`mongo --quiet --eval 'db.isMaster().ismaster'`
+
+  if [ $IS_MASTER = false ]; then
+      echo "Not master. Exiting ..."
+      exit 0
+  fi
+fi
 
 echo "=> Backup started ..."
 

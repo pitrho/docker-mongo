@@ -20,6 +20,7 @@ if [ -n "${CRON_TIME}" ]; then
     echo "S3_BUCKET=${S3_BUCKET}" >> /etc/cron.d/mongodb_backup
     [ -n "${MONGO_DB}" ] && { echo "REDIS_DB=${MONGO_DB}" >> /etc/cron.d/mongodb_backup; }
     [ -n "${MAX_BACKUPS}" ] && { echo "MAX_BACKUPS=${MAX_BACKUPS}" >> /etc/cron.d/mongodb_backup; }
+    [ -n "${BACKUP_ONLY_MASTER}" ] && { echo "BACKUP_ONLY_MASTER=${BACKUP_ONLY_MASTER}" >> /etc/cron.d/mongodb_backup; }
     echo "${CRON_TIME} /backup.sh >> ${BACKUP_LOG} 2>&1" >> /etc/cron.d/mongodb_backup
 
     # start cron if it's not running
