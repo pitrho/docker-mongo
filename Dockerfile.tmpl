@@ -26,7 +26,7 @@ RUN mkdir -p /data/db
 RUN mkdir /etc/service/mongo
 COPY run.sh /etc/service/mongo/run
 COPY enable_backups.sh /enable_backups.sh
-COPY backu.sh /backup.sh
+COPY backup.sh /backup.sh
 
 EXPOSE 27017 28017
 

@@ -35,7 +35,7 @@ fi
 rm -rf build
 mkdir build
 cp run.sh build/
-cp enable_backup.sh build/
+cp enable_backups.sh build/
 cp backup.sh build/
 sed 's/%%MONGO_REPO%%/'"$MONGO_REPO"'/g; s/%%MONGO_VERSION%%/'"$MONGO_VERSION"'/g' Dockerfile.tmpl > build/Dockerfile
 
